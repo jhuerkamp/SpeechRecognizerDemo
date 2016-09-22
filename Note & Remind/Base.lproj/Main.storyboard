@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11134" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11106"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
+        <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--NotesN Remind Display View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NotesNRemindDisplayViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="BYZ-38-t0r" customClass="NotesNRemindDisplayViewController" customModule="Note___Remind" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +20,185 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FhV-Rv-INV" customClass="ReminderTableView" customModule="Note___Remind" customModuleProvider="target">
+                                <frame key="frameInset" minY="20" width="375" height="160"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="ReminderCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="ReminderCell" textLabel="4As-l1-22O" style="IBUITableViewCellStyleDefault" id="iWs-d2-ctV">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="iWs-d2-ctV" id="A52-jS-yky">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4As-l1-22O">
+                                                    <frame key="frameInset" minX="15" width="345" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="CzG-pn-e1n"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="MlU-S4-bb5"/>
+                                </connections>
+                            </tableView>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" restorationIdentifier="NotesTableView" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="qeH-a6-4YC" customClass="NotesTableView" customModule="Note___Remind" customModuleProvider="target">
+                                <frame key="frameInset" minY="186" width="375" height="412"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="NoteCell" selectionStyle="default" indentationWidth="10" reuseIdentifier="NoteCell" textLabel="KmM-YY-zva" style="IBUITableViewCellStyleDefault" id="ttc-is-fhF">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ttc-is-fhF" id="PMr-Sb-GEM">
+                                            <frame key="frameInset" width="375" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="work" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="KmM-YY-zva">
+                                                    <frame key="frameInset" minX="15" width="345" height="43"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="BYZ-38-t0r" id="e65-cH-98D"/>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="xP5-Tl-u2y"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sn8-vl-jfy">
+                                <frame key="frameInset" minX="16" minY="606" width="343" height="41"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Record"/>
+                                <connections>
+                                    <segue destination="dfk-EL-STP" kind="popoverPresentation" popoverAnchorView="sn8-vl-jfy" id="Lhz-hU-aAQ">
+                                        <popoverArrowDirection key="popoverArrowDirection" up="YES" down="YES" left="YES" right="YES"/>
+                                    </segue>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Wmc-8n-cde">
+                                <frame key="frameInset" minY="180" width="375" height="6"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="4w8-8J-8Jf">
+                                <frame key="frameInset" minX="16" minY="298" width="343" height="70"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <color key="textColor" red="0.0" green="0.39014393091201782" blue="0.52602028846740723" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </view>
+                    <connections>
+                        <outlet property="notesTable" destination="qeH-a6-4YC" id="LDe-vP-mK5"/>
+                        <outlet property="recordButton" destination="sn8-vl-jfy" id="zUM-lo-9RV"/>
+                        <outlet property="recordingLabel" destination="4w8-8J-8Jf" id="Q8T-HQ-WYJ"/>
+                        <outlet property="reminderTable" destination="FhV-Rv-INV" id="yTS-Ic-iJ0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="61.600000000000001" y="117.39130434782609"/>
+        </scene>
+        <!--Recording View Controller-->
+        <scene sceneID="aMg-NR-9LB">
+            <objects>
+                <viewController storyboardIdentifier="RecordingViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dfk-EL-STP" customClass="RecordingViewController" customModule="Note___Remind" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="kCF-PM-dIT"/>
+                        <viewControllerLayoutGuide type="bottom" id="bQ7-ju-uTs"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="1yy-Fh-bUz">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MzL-1L-Qhb">
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.0" green="0.39607843139999999" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2pc-7m-u2w">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="G6S-ki-ysS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="29"/>
+                                <color key="textColor" red="0.0" green="0.3971637487411499" blue="0.65563684701919556" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nXU-71-aQo">
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="57" id="ELE-er-Bkm"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="Cancel"/>
+                                <connections>
+                                    <action selector="cancelTapped:" destination="dfk-EL-STP" eventType="touchUpInside" id="rU8-Nv-yjD"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a5P-bj-U1X">
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="171" id="Qxw-9X-Abv"/>
+                                    <constraint firstAttribute="height" constant="68" id="l6e-ID-pf4"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="Add Reminder"/>
+                                <connections>
+                                    <action selector="addReminderTapped:" destination="dfk-EL-STP" eventType="touchUpInside" id="ffX-vQ-nTq"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YI7-WC-FfU">
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="25"/>
+                                <state key="normal" title="Add Note"/>
+                                <connections>
+                                    <action selector="addNoteTapped:" destination="dfk-EL-STP" eventType="touchUpInside" id="xws-aH-l8P"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="a5P-bj-U1X" firstAttribute="top" secondItem="YI7-WC-FfU" secondAttribute="top" id="2bY-Ev-fwe"/>
+                            <constraint firstAttribute="bottom" secondItem="nXU-71-aQo" secondAttribute="bottom" constant="20" symbolic="YES" id="6ad-Vh-e73"/>
+                            <constraint firstItem="2pc-7m-u2w" firstAttribute="centerY" secondItem="1yy-Fh-bUz" secondAttribute="centerY" id="7nU-0D-AE5"/>
+                            <constraint firstItem="2pc-7m-u2w" firstAttribute="trailing" secondItem="YI7-WC-FfU" secondAttribute="trailing" id="8By-Dz-QCc"/>
+                            <constraint firstItem="YI7-WC-FfU" firstAttribute="trailing" secondItem="nXU-71-aQo" secondAttribute="trailing" id="99F-mb-YHM"/>
+                            <constraint firstItem="MzL-1L-Qhb" firstAttribute="leading" secondItem="1yy-Fh-bUz" secondAttribute="leadingMargin" id="AlO-mi-IRK"/>
+                            <constraint firstItem="2pc-7m-u2w" firstAttribute="top" secondItem="MzL-1L-Qhb" secondAttribute="bottom" constant="78" id="BdN-Hr-tbN"/>
+                            <constraint firstItem="a5P-bj-U1X" firstAttribute="baseline" secondItem="YI7-WC-FfU" secondAttribute="firstBaseline" id="Cdk-ll-oKk"/>
+                            <constraint firstItem="MzL-1L-Qhb" firstAttribute="trailing" secondItem="2pc-7m-u2w" secondAttribute="trailing" id="G7e-p8-kMP"/>
+                            <constraint firstItem="2pc-7m-u2w" firstAttribute="leading" secondItem="a5P-bj-U1X" secondAttribute="leading" id="KeC-ad-0oN"/>
+                            <constraint firstItem="MzL-1L-Qhb" firstAttribute="trailing" secondItem="1yy-Fh-bUz" secondAttribute="trailingMargin" id="QL7-BX-uWR"/>
+                            <constraint firstItem="YI7-WC-FfU" firstAttribute="leading" secondItem="a5P-bj-U1X" secondAttribute="trailing" constant="1" id="T4K-YT-373"/>
+                            <constraint firstItem="MzL-1L-Qhb" firstAttribute="leading" secondItem="2pc-7m-u2w" secondAttribute="leading" id="dT1-yO-j76"/>
+                            <constraint firstItem="nXU-71-aQo" firstAttribute="top" secondItem="a5P-bj-U1X" secondAttribute="bottom" constant="8" symbolic="YES" id="gJT-RE-Ayc"/>
+                            <constraint firstItem="a5P-bj-U1X" firstAttribute="leading" secondItem="nXU-71-aQo" secondAttribute="leading" id="nr1-Lf-lxs"/>
+                            <constraint firstItem="MzL-1L-Qhb" firstAttribute="top" secondItem="kCF-PM-dIT" secondAttribute="bottom" constant="8" symbolic="YES" id="p2Q-6m-TJv"/>
+                            <constraint firstItem="YI7-WC-FfU" firstAttribute="baseline" secondItem="a5P-bj-U1X" secondAttribute="firstBaseline" id="tef-oM-Wcg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addNote" destination="YI7-WC-FfU" id="qK3-i8-KrH"/>
+                        <outlet property="addReminder" destination="a5P-bj-U1X" id="jGC-zm-47n"/>
+                        <outlet property="isRecordingLabel" destination="2pc-7m-u2w" id="aYD-nn-O02"/>
+                        <outlet property="recordedTextLabel" destination="MzL-1L-Qhb" id="mti-3Y-W43"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="8UB-D4-5jO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="895.20000000000005" y="118.29085457271366"/>
         </scene>
     </scenes>
 </document>
