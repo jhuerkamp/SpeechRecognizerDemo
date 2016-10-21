@@ -8,23 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		D1066B9E1D88B49600426DD3 /* RecordingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1066B9D1D88B49600426DD3 /* RecordingViewController.swift */; };
-		D11C57991D8DAB79005BE49B /* ReminderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11C57981D8DAB79005BE49B /* ReminderCell.swift */; };
-		D11C579B1D8DAB84005BE49B /* NoteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D11C579A1D8DAB84005BE49B /* NoteCell.swift */; };
 		D149EBBB1D8766E500931231 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149EBBA1D8766E500931231 /* AppDelegate.swift */; };
 		D149EBBD1D8766E500931231 /* NotesNRemindDisplayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149EBBC1D8766E500931231 /* NotesNRemindDisplayViewController.swift */; };
 		D149EBC01D8766E500931231 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D149EBBE1D8766E500931231 /* Main.storyboard */; };
 		D149EBC21D8766E500931231 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D149EBC11D8766E500931231 /* Assets.xcassets */; };
 		D149EBC51D8766E500931231 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D149EBC31D8766E500931231 /* LaunchScreen.storyboard */; };
-		D149EBCE1D876DD100931231 /* ReminderTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149EBCD1D876DD100931231 /* ReminderTableView.swift */; };
-		D149EBD01D876DF100931231 /* NotesTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D149EBCF1D876DF100931231 /* NotesTableView.swift */; };
-		D1D4C5161D8B6C3000FA348E /* notes.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1D4C5151D8B6C3000FA348E /* notes.plist */; };
-		D1D4C5181D8B6C5500FA348E /* reminders.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1D4C5171D8B6C5500FA348E /* reminders.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		D1066B9D1D88B49600426DD3 /* RecordingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecordingViewController.swift; sourceTree = "<group>"; };
-		D11C57981D8DAB79005BE49B /* ReminderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReminderCell.swift; path = "Note & Remind/ReminderCell.swift"; sourceTree = "<group>"; };
-		D11C579A1D8DAB84005BE49B /* NoteCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NoteCell.swift; path = "Note & Remind/NoteCell.swift"; sourceTree = "<group>"; };
 		D149EBB71D8766E500931231 /* Note & Remind.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Note & Remind.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D149EBBA1D8766E500931231 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D149EBBC1D8766E500931231 /* NotesNRemindDisplayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotesNRemindDisplayViewController.swift; sourceTree = "<group>"; };
@@ -32,10 +24,6 @@
 		D149EBC11D8766E500931231 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D149EBC41D8766E500931231 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D149EBC61D8766E500931231 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D149EBCD1D876DD100931231 /* ReminderTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ReminderTableView.swift; path = "Note & Remind/ReminderTableView.swift"; sourceTree = "<group>"; };
-		D149EBCF1D876DF100931231 /* NotesTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotesTableView.swift; path = "Note & Remind/NotesTableView.swift"; sourceTree = "<group>"; };
-		D1D4C5151D8B6C3000FA348E /* notes.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = notes.plist; sourceTree = "<group>"; };
-		D1D4C5171D8B6C5500FA348E /* reminders.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = reminders.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,7 +40,6 @@
 		D149EBAE1D8766E400931231 = {
 			isa = PBXGroup;
 			children = (
-				D149EBCC1D876D9700931231 /* TableViews */,
 				D149EBB91D8766E500931231 /* Note & Remind */,
 				D149EBB81D8766E500931231 /* Products */,
 			);
@@ -76,21 +63,8 @@
 				D149EBC31D8766E500931231 /* LaunchScreen.storyboard */,
 				D149EBC61D8766E500931231 /* Info.plist */,
 				D1066B9D1D88B49600426DD3 /* RecordingViewController.swift */,
-				D1D4C5151D8B6C3000FA348E /* notes.plist */,
-				D1D4C5171D8B6C5500FA348E /* reminders.plist */,
 			);
 			path = "Note & Remind";
-			sourceTree = "<group>";
-		};
-		D149EBCC1D876D9700931231 /* TableViews */ = {
-			isa = PBXGroup;
-			children = (
-				D149EBCD1D876DD100931231 /* ReminderTableView.swift */,
-				D149EBCF1D876DF100931231 /* NotesTableView.swift */,
-				D11C57981D8DAB79005BE49B /* ReminderCell.swift */,
-				D11C579A1D8DAB84005BE49B /* NoteCell.swift */,
-			);
-			name = TableViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -155,8 +129,6 @@
 			files = (
 				D149EBC51D8766E500931231 /* LaunchScreen.storyboard in Resources */,
 				D149EBC21D8766E500931231 /* Assets.xcassets in Resources */,
-				D1D4C5161D8B6C3000FA348E /* notes.plist in Resources */,
-				D1D4C5181D8B6C5500FA348E /* reminders.plist in Resources */,
 				D149EBC01D8766E500931231 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,11 +141,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D149EBBD1D8766E500931231 /* NotesNRemindDisplayViewController.swift in Sources */,
-				D11C57991D8DAB79005BE49B /* ReminderCell.swift in Sources */,
 				D1066B9E1D88B49600426DD3 /* RecordingViewController.swift in Sources */,
-				D149EBD01D876DF100931231 /* NotesTableView.swift in Sources */,
-				D149EBCE1D876DD100931231 /* ReminderTableView.swift in Sources */,
-				D11C579B1D8DAB84005BE49B /* NoteCell.swift in Sources */,
 				D149EBBB1D8766E500931231 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

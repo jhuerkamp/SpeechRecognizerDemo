@@ -17,6 +17,20 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
     private var recognitionRequest: SFSpeechAudioBufferRecognitionRequest?
     private var recognitionTask: SFSpeechRecognitionTask?
     private let audioEngine = AVAudioEngine()
+    var speechResult = SFSpeechRecognitionResult()
+    
+    let noteCommands:[String] = [
+    "note to ",
+    "note "
+    ]
+    
+    let remindCommands:[String] = [
+    "remind me to ",
+    "remind me ",
+    "remind ",
+    "reminder to ",
+    "reminder "
+    ]
     
     @IBOutlet weak var recordedTextLabel: UITextView!
     @IBOutlet weak var isRecordingLabel: UILabel!
@@ -35,7 +49,12 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
                 
                 switch authStatus {
                 case .authorized:
-                    try! self.startRecording()
+                    do {
+                        try self.startRecording()
+                    } catch {
+                        alertTitle = "Recorder Error"
+                        alertMsg = "There was a problem starting the speech recorder"
+                    }
                     
                 case .denied:
                     alertTitle = "Speech recognizer not allowed"
@@ -58,16 +77,14 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
     private func startRecording() throws {
-        if audioEngine.isRunning {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-            // Cancel the previous task if it's running
-            if let recognitionTask = recognitionTask {
-                recognitionTask.cancel()
-                self.recognitionTask = nil
-            }
-        } else {
+        if !audioEngine.isRunning {
+            let timer = Timer(timeInterval: 5.0, target: self, selector: #selector(RecordingViewController.timerEnded), userInfo: nil, repeats: false)
+            RunLoop.current.add(timer, forMode: .commonModes)
             
             let audioSession = AVAudioSession.sharedInstance()
             try audioSession.setCategory(AVAudioSessionCategoryRecord)
@@ -88,25 +105,12 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
                 var isFinal = false
                 
                 if let result = result {
-                    // Log best results and segment inof
-                    print("Best Transcription: \(result.bestTranscription.formattedString)")
-                    for segment in result.bestTranscription.segments {
-                        print("Timestamp: \(segment.timestamp)")
-                        print("Confidence: \(segment.confidence)")
-                        print("Duration: \(segment.duration)")
-                    }
-                    
-                    // Log alternate results and segment info
-                    for altTranscription in result.transcriptions {
-                        print("Alternate transcription: \(altTranscription.formattedString)")
-                        for segment in altTranscription.segments {
-                            print("Timestamp: \(segment.timestamp)")
-                            print("Confidence: \(segment.confidence)")
-                            print("Duration: \(segment.duration)")
-                        }
-                    }
-                    self.recordedTextLabel.text = result.bestTranscription.formattedString
+                    print("result: \(result.isFinal)")
                     isFinal = result.isFinal
+                    
+                    self.speechResult = result
+                    self.recordedTextLabel.text = result.bestTranscription.formattedString
+
                 }
                 
                 if error != nil || isFinal {
@@ -150,33 +154,58 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         }
     }
     
-    // MARK: Buttons
-    
-    @IBAction func addNoteTapped(_ sender: UIButton) {
-        if audioEngine.isRunning {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-            // Cancel the previous task if it's running
-            if let recognitionTask = recognitionTask {
-                recognitionTask.cancel()
-                self.recognitionTask = nil
+    func checkForActionPhrases() {
+        var addNote = false
+        var addReminder = false
+        
+        for segment in speechResult.bestTranscription.segments {
+            // Don't search until the transcription size is at least 
+            // the size of the shortest phrase
+            if segment.substringRange.location >= 5 {
+                // Separate segments to single words
+                let best = speechResult.bestTranscription.formattedString
+                let indexTo = best.index(best.startIndex, offsetBy: segment.substringRange.location)
+                let substring = best.substring(to: indexTo)
+                
+                // Search for phrases
+                addNote = substring.lowercased().contains("note ")
+                addReminder = substring.lowercased().contains("remind")
             }
         }
         
-        var notesArray = UserDefaults.standard.mutableArrayValue(forKey: "Notes")
+        if addNote {
+            recordedTextLabel.text = remove(commands: noteCommands, from: recordedTextLabel.text)
+            addNoteTapped(nil)
+        } else if addReminder {
+            recordedTextLabel.text = remove(commands: remindCommands, from: recordedTextLabel.text)
+            addReminderTapped(nil)
+        }
+    }
+    
+    // MARK: Buttons
+    
+    @IBAction func addNoteTapped(_ sender: UIButton?) {
+        if audioEngine.isRunning {
+            stopRecording()
+        }
         
-        if notesArray.count == 0 {
-            notesArray = []
+        let notesArray = NSMutableArray()
+            
+        if let currentNotes = UserDefaults.standard.array(forKey: "Notes") {
+            notesArray.addObjects(from: currentNotes)
         }
         
         saveListEntry(entry: notesArray, listType: "Notes")
     }
     
-    @IBAction func addReminderTapped(_ sender: UIButton) {
-        var remindersArray = UserDefaults.standard.mutableArrayValue(forKey: "Reminders")
+    @IBAction func addReminderTapped(_ sender: UIButton?) {
+        if audioEngine.isRunning {
+            stopRecording()
+        }
+        let remindersArray = NSMutableArray()
         
-        if remindersArray.count == 0 {
-            remindersArray = []
+        if let currentReminders = UserDefaults.standard.array(forKey: "Reminders") {
+            remindersArray.addObjects(from: currentReminders)
         }
         
         saveListEntry(entry: remindersArray, listType: "Reminders")
@@ -191,12 +220,78 @@ class RecordingViewController: UIViewController, SFSpeechRecognizerDelegate {
         
         UserDefaults.standard.setValue(entry, forKey: listType)
         
+        isRecordingLabel.text = ""
+        
+        showSuccessAlert()
+    }
+    
+    func transcripteAudioFile(audioFileURL: URL) {
+        let fileURL = URL(fileURLWithPath: Bundle.main.path(forResource: "audio", ofType: ".mp3")!)
+        let request = SFSpeechURLRecognitionRequest(url: fileURL)
+        let recognizer = SFSpeechRecognizer(locale: Locale(identifier: "en-US"))!
+
+        
+        let _ : SFSpeechRecognitionTask = recognizer.recognitionTask(with: request, resultHandler: { (result, error)   in
+            if let error = error {
+                print("There was an problem: \(error)")
+            } else {
+                print (result?.bestTranscription.formattedString)
+            }
+        })
+    }
+    
+    func timerEnded() {
+        // If the audio recording engine is running stop it and remove the SFSpeechRecognitionTask
         if audioEngine.isRunning {
-            audioEngine.stop()
-            recognitionRequest?.endAudio()
-            isRecordingLabel.text = ""
+            stopRecording()
+            checkForActionPhrases()
+        }
+    }
+    
+    func remove(commands: [String], from recordedText: String) -> String {
+        var tempText = recordedText
+        
+        // Search array of command strings and remove if found
+        for command in commands {
+            if let commandRange = tempText.lowercased().range(of: command) {
+                // Find range from start of recorded text to the end of command found
+                let range = Range.init(uncheckedBounds: (lower: tempText.startIndex, upper: commandRange.upperBound))
+                // Remove the found range
+                tempText.removeSubrange(range)
+                print("Updated text: \(tempText)")
+            }
         }
         
-        dismiss(animated: true, completion: nil)
+        return tempText
+    }
+    
+    func stopRecording() {
+        audioEngine.stop()
+        recognitionRequest?.endAudio()
+        // Cancel the previous task if it's running
+        if let recognitionTask = recognitionTask {
+            recognitionTask.cancel()
+            self.recognitionTask = nil
+        }
+    }
+    
+    func showSuccessAlert() {
+        if let savedText = recordedTextLabel.text {
+            let alert = UIAlertController(title: "Note Added", message: "\(savedText) added.  Add another?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "YES", style: .default, handler: { (action) in
+                do {
+                    try self.startRecording()
+                } catch {
+                    print("There was a problem starting the speech recorder")
+                    let alert = UIAlertController(title: "Recorder Error", message: "There was a problem starting the speech recorder", preferredStyle: .alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                }
+            }))
+            alert.addAction(UIAlertAction(title: "NO", style: .default, handler: { (action) in
+                self.dismiss(animated: true, completion: nil)
+            }))
+            
+            present(alert, animated: true, completion: nil)
+        }
     }
 }

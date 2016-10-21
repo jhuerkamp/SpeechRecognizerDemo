@@ -41,10 +41,10 @@ class NotesNRemindDisplayViewController: UIViewController, UITableViewDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        notesTable.register(NoteCell.classForCoder(), forCellReuseIdentifier: "NoteCell")
-        reminderTable.register(ReminderCell.classForCoder(), forCellReuseIdentifier: "ReminderCell")
+        
+        reminderTable.tableFooterView = UIView()
+        notesTable.tableFooterView = UIView()
     }
-    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == reminderTable {
@@ -60,11 +60,11 @@ class NotesNRemindDisplayViewController: UIViewController, UITableViewDelegate, 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if tableView == reminderTable {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell", for: indexPath) //as! ReminderCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ReminderCell", for: indexPath)
             cell.textLabel?.text = remindersArray[indexPath.row] as? String
             return cell
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath) //as! NoteCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "NoteCell", for: indexPath)
             if let note = notesArray[indexPath.row] as? String {
                 print(note)
                 cell.textLabel?.text = note
